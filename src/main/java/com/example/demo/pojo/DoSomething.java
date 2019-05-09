@@ -12,23 +12,49 @@ public class DoSomething implements Runnable {
     this.name = name;
   }
 
+  int a = 0;
+
   @Override
   public  void run() {
-    try {
-      Person.out();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+    synchronized (this){
+      for (int i = 0; i < 10; i++) {
+        System.out.println(Thread.currentThread().getName()+"something");
+        a+=i;
+      }
+      notifyAll();
     }
   }
 
+
+
   public static void main(String[] args) {
     DoSomething d1 =  new DoSomething("张三");
-    DoSomething d2 =  new DoSomething("李四");
 
-    Thread thread = new Thread(d1);
-    Thread thread2 = new Thread(d2);
+    new Thread(new result(d1)).start();
+    new Thread(new result(d1)).start();
+    new Thread(new result(d1)).start();
 
-    thread.start();
-    thread2.start();
+    new Thread(d1).start();
+  }
+}
+
+class result implements Runnable{
+  DoSomething doSomething;
+
+  public result(DoSomething doSomething) {
+    this.doSomething = doSomething;
+  }
+
+  @Override
+  public void run() {
+    synchronized (doSomething){
+      System.out.println(Thread.currentThread().getName()+"result");
+      try {
+        doSomething.wait();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      System.out.println(Thread.currentThread().getName()+doSomething.a);
+    }
   }
 }
