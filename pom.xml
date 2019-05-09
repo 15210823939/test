@@ -59,7 +59,27 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.12</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.mobvoi.vw</groupId>
+      <artifactId>common</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+
   </dependencies>
+
+  <repositories>
+    <repository>
+      <id>snapshots</id>
+      <name>snapshots</name>
+      <url>http://maven.internal.mobvoi.com/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>releases</id>
+      <name>releases</name>
+      <url>http://maven.internal.mobvoi.com/nexus/content/repositories/releases/</url>
+    </repository>
+  </repositories>
 
   <build>
     <plugins>
